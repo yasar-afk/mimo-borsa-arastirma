@@ -1,0 +1,202 @@
+/* ============================================================
+   dashboard/assets/style.css — Trading Bot Dashboard CSS
+   
+   NOT: Dash bu dosyayı otomatik olarak yükler.
+   ============================================================ */
+
+/* ─── Google Fonts ──────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── Temel Reset ────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: #0d1117;
+    color: #e6edf3;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    scroll-behavior: smooth;
+}
+
+/* ─── Scrollbar Stili ────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0d1117; }
+::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+/* ─── Dash Tab Stilleri ──────────────────────────────────── */
+.nav-tabs {
+    border-bottom: 1px solid #30363d !important;
+    padding: 0 !important;
+    gap: 4px !important;
+}
+
+.nav-link {
+    color: #8b949e !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    padding: 10px 18px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    border-radius: 0 !important;
+}
+
+.nav-link:hover {
+    color: #e6edf3 !important;
+    background: #161b22 !important;
+}
+
+.nav-link.active {
+    color: #58a6ff !important;
+    background: transparent !important;
+    border-bottom: 2px solid #58a6ff !important;
+    font-weight: 600 !important;
+}
+
+/* ─── Kart Animasyonları ─────────────────────────────────── */
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Metrik Kartları ────────────────────────────────────── */
+.metric-value {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    font-feature-settings: 'tnum';
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Tablo Stili ────────────────────────────────────────── */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table thead tr th {
+    background: #21262d;
+    color: #8b949e;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #30363d;
+    white-space: nowrap;
+}
+
+table tbody tr {
+    transition: background 0.15s ease;
+}
+
+table tbody tr:hover {
+    background: #161b22;
+}
+
+table tbody tr td {
+    padding: 7px 12px;
+    font-size: 12px;
+    border-bottom: 1px solid #21262d;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* ─── Select & Input Stili ───────────────────────────────── */
+select, .form-select {
+    background-color: #161b22 !important;
+    border-color: #30363d !important;
+    color: #e6edf3 !important;
+}
+
+select:focus, .form-select:focus {
+    border-color: #58a6ff !important;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15) !important;
+}
+
+/* ─── Radio Button Stili ─────────────────────────────────── */
+.form-check-input:checked {
+    background-color: #58a6ff !important;
+    border-color: #58a6ff !important;
+}
+
+/* ─── Buton Stili ────────────────────────────────────────── */
+.btn {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ─── Plotly Grafik Container ────────────────────────────── */
+.js-plotly-plot .plotly .modebar {
+    background: transparent !important;
+}
+
+.js-plotly-plot .plotly .modebar-btn path {
+    fill: #8b949e !important;
+}
+
+/* ─── Canlı Gösterge Animasyonu ──────────────────────────── */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #3fb950;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+    margin-right: 6px;
+}
+
+/* ─── Yükleme Animasyonu ─────────────────────────────────── */
+._dash-loading {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+/* ─── Tab İçerik Padding ─────────────────────────────────── */
+.tab-content {
+    padding: 16px 0 0 !important;
+    background: transparent !important;
+}
+
+/* ─── Gradient Metin ─────────────────────────────────────── */
+.gradient-text {
+    background: linear-gradient(90deg, #58a6ff, #bc8cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ─── Sayı Formatı ───────────────────────────────────────── */
+.number {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .metric-value { font-size: 16px; }
+    .nav-link { padding: 8px 10px !important; font-size: 11px !important; }
+}

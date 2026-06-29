@@ -1,0 +1,106 @@
+# ============================================================
+# config_live_v6mr.yaml — V6 Mean Reversion LIVE Config
+# Amaç : Canlı trading için optimize edilmiş parametreler
+# ============================================================
+
+# ─── Strateji Ayarları ────────────────────────────────────────
+strategy:
+  version: "v6_mean_rev"         # V6 Mean Reversion stratejisi
+  entry_threshold: 0.65          # Pozisyon açmak için gereken min skor
+  exit_threshold: 0.40           # Pozisyon kapatmak için eşik
+  max_concurrent_positions: 5    # Maksimum aktif pozisyon
+  min_volume_ratio: 0.8          # Minimum hacim oranı
+
+# ─── V6 Mean Reversion Parametreleri ──────────────────────────
+mean_reversion:
+  bb_period: 20                  # Bollinger Bands periyodu
+  bb_std: 2.0                    # BB standart sapması
+  rsi_period: 14                 # RSI periyodu
+  rsi_oversold: 30               # RSI aşırı satım eşiği
+  rsi_overbought: 70             # RSI aşırı alım eşiği
+  atr_period: 14                 # ATR periyodu
+  volume_ma_period: 20           # Hacim ortalaması periyodu
+  divergence_lookback: 10        # Divergence arama penceresi
+  atr_sl_multiplier: 1.5         # ATR stop loss çarpanı
+  atr_tp_multiplier: 2.5         # ATR take profit çarpanı
+
+# ─── Teknik İndikatör Ayarları ────────────────────────────────
+technical:
+  adx_period: 14
+  adx_threshold: 20.0
+
+# ─── Borsa Ayarları ──────────────────────────────────────────
+exchange:
+  name: binance
+  symbol: "BTC/USDT"             # Ana sembol
+  sandbox: false                 # ⚠️ LIVE MODU
+  default_type: "spot"           # Spot trading (daha güvenli)
+  rate_limit: true
+  recv_window: 5000
+  request_timeout: 30
+
+# ─── Taranecek Semboller ──────────────────────────────────────
+# Backtest'te en iyi performans gösteren semboller
+scan_symbols:
+  - "BTC/USDT"
+  - "ETH/USDT"
+  - "SOL/USDT"
+  - "BNB/USDT"
+  - "XRP/USDT"
+  - "ADA/USDT"
+  - "DOGE/USDT"
+  - "AVAX/USDT"
+  - "DOT/USDT"
+  - "LINK/USDT"
+
+# ─── Veri Toplama Ayarları ───────────────────────────────────
+data:
+  timeframes:
+    - "1h"                       # Ana timeframe
+    - "4h"                       # Bias timeframe
+  limit: 500
+  primary_timeframe: "1h"
+  cache_enabled: true
+  cache_ttl_seconds: 3600
+
+  polling:
+    "1h": 3600
+    "4h": 14400
+
+  validation:
+    max_missing_candles: 5
+    min_volume_threshold: 0
+    price_spike_factor: 0.1
+
+# ─── Risk Yönetimi ──────────────────────────────────────────
+risk:
+  max_position_pct: 0.10         # Tek pozisyona max %10
+  max_daily_drawdown_pct: 0.03   # Günlük max %3 zarar
+  min_risk_reward_ratio: 2.0     # Min Risk/Ödül
+  atr_stop_multiplier: 1.5       # ATR tabanlı stop
+  high_risk_pct: 0.15            # Güçlü sinyalde %15
+  normal_risk_pct: 0.10          # Normal sinyalde %10
+
+# ─── Loglama ────────────────────────────────────────────────
+logging:
+  level: "INFO"
+  log_dir: "logs/live_v6mr"
+  max_bytes: 10485760
+  backup_count: 10
+  console_output: true
+
+# ─── Paper Trading (İlk test için) ──────────────────────────
+paper_trading:
+  enabled: false                 # ⚠️ LIVE MODU - DİKKAT!
+  initial_balance_usdt: 10000
+  commission_rate: 0.001
+
+# ─── Emir Yürütme ────────────────────────────────────────────
+execution:
+  order_type: "market"           # Market emir (hızlı giriş)
+  limit_timeout_minutes: 15
+  leverage: 1                    # Kaldıraç yok (spot)
+  margin_mode: "ISOLATED"
+
+# ─── AI Doğrulama ─────────────────────────────────────────────
+use_ai_signal_verification: true # AI sinyal doğrulaması aktif

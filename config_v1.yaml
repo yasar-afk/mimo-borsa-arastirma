@@ -1,0 +1,47 @@
+data:
+  cache_enabled: true
+  cache_ttl_seconds: 3600
+  limit: 500
+  polling:
+    1d: 86400
+    1h: 3600
+    4h: 14400
+  primary_timeframe: 1h
+  timeframes:
+  - 1h
+  - 4h
+  - 1d
+  validation:
+    max_missing_candles: 5
+    min_volume_threshold: 0
+    price_spike_factor: 0.1
+exchange:
+  default_type: future
+  name: binance
+  rate_limit: true
+  recv_window: 5000
+  request_timeout: 30
+  sandbox: false
+  symbol: BTC/USDT
+execution:
+  leverage: 5
+  limit_timeout_minutes: 15
+  margin_mode: ISOLATED
+  order_type: limit
+logging:
+  backup_count: 5
+  console_output: true
+  level: INFO
+  log_dir: logs_v1
+  max_bytes: 10485760
+paper_trading:
+  commission_rate: 0.001
+  enabled: true
+  initial_balance_usdt: 10000
+risk:
+  atr_stop_multiplier: 2.0
+  max_daily_drawdown_pct: 0.05
+  max_position_pct: 0.02
+  min_risk_reward_ratio: 2.0
+strategy:
+  version: v1

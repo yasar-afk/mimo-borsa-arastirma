@@ -1,0 +1,86 @@
+# ============================================================
+# config_v5.yaml — Trading Bot Trading Bot v5
+# Amaç : v5 Price Action / SMC stratejisi için özel konfigürasyon.
+# ============================================================
+
+# ─── Strateji Ayarları ────────────────────────────────────────
+strategy:
+  version: "v5"                 # Price Action / SMC V5 (Refine Optimized)
+  min_volume_ratio: 0.7
+  sweep_window: 100             # Optimized sweep window from focused sweep
+  max_hold_sweep: 7             # Optimized maximum candles to hold sweep
+  require_trend: true           # EMA trend filter enabled
+  trend_ema: 180                # Optimized trend filter EMA period
+  displacement_atr_mult: 0.6    # Optimized ATR stop multiplier offset
+  use_premium_discount: true    # Premium/Discount filter enabled
+  use_session_filter: false     # Disabled (24/7 scanning for optimal profit)
+  use_ote_filter: false
+  use_volume_filter: false
+  use_funding_oi_filter: false
+
+# ─── Teknik İndikatör Ayarları ────────────────────────────────
+technical:
+  adx_threshold: 18.0
+
+# ─── Borsa Ayarları ──────────────────────────────────────────
+exchange:
+  name: binance
+  symbol: "BTC/USDT"
+  sandbox: false
+  default_type: "future"        # Futures required for short/leverage
+  rate_limit: true
+  recv_window: 5000
+  request_timeout: 30
+
+# ─── Veri Toplama Ayarları ───────────────────────────────────
+data:
+  timeframes:
+    - "15m"
+    - "1h"
+    - "4h"
+  limit: 500
+  primary_timeframe: "15m"
+  cache_enabled: true
+  cache_ttl_seconds: 900
+  polling:
+    "15m": 900
+    "1h": 3600
+    "4h": 14400
+
+  validation:
+    max_missing_candles: 5
+    min_volume_threshold: 0
+    price_spike_factor: 0.1
+
+# ─── Risk Yönetimi ────────────────────────────────────────────
+risk:
+  max_position_pct: 0.02
+  max_daily_drawdown_pct: 0.05
+  min_risk_reward_ratio: 5.5    # Optimized target RR
+  atr_stop_multiplier: 0.6      # Dynamic ATR stop multiplier
+  normal_risk_pct: 0.02         # 2% risk of current capital
+  high_risk_pct: 0.02           # 2% risk of current capital
+
+# ─── Loglama ─────────────────────────────────────────────────
+logging:
+  level: "INFO"
+  log_dir: "logs_v5"           # Log directory for V5
+  max_bytes: 10485760
+  backup_count: 5
+  console_output: true
+
+# ─── Paper Trading ────────────────────────────────────────────
+paper_trading:
+  enabled: true
+  initial_balance_usdt: 10000
+  commission_rate: 0.00063      # BNB discounted taker fee rate (conservative exit assumption)
+
+# ─── Emir Yürütme ─────────────────────────────────────────────
+execution:
+  order_type: "market"
+  limit_timeout_minutes: 180
+  leverage: 5
+  margin_mode: "ISOLATED"
+
+# ─── Yapay Zeka Sinyal Doğrulama ──────────────────────────────
+use_ai_signal_verification: false

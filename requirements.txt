@@ -1,5 +1,5 @@
 # ============================================================
-# requirements.txt — ANTIGRAVITI Trading Bot
+# requirements.txt — Trading Bot Trading Bot
 # Amaç : Projenin tüm Python bağımlılıklarını sabitlenmiş
 #         versiyonlarla listeler.
 # Tarih: 2026-06-03

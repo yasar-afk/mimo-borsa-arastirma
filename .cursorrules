@@ -1,0 +1,9 @@
+# AI Agent Instructions (Cursor Rules)
+
+You are an AI assistant helping with this trading bot repository. Please adhere to these guidelines:
+
+1. **Always Read README.md First:** Before proposing any plan or executing modifications, read `README.md` to understand the codebase structure and key files.
+2. **Process Execution Constraint:** Do not start multiple instances of `live_v6mr.py` in live/paper mode. Only one instance must run to prevent conflict in `logs/portfolio_state.json`. The bot locks local port `28384`.
+3. **Decimals Handling:** Always format prices using `format_price(price)` dynamically. Do not use hardcoded rounding (like `:.4f`) for prices, which will round cheap coins like LUNC to `0.0001` or `0.00`.
+4. **State Management:** All open positions, trade history, and USDT balance are managed in `logs/portfolio_state.json`. Any changes to the state must preserve this schema.
+5. **Windows Encoding:** Wrap standard output in UTF-8 on Windows environments (Turkish locale) to avoid `UnicodeEncodeError` when printing emojis or Turkish characters.

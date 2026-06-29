@@ -1,0 +1,82 @@
+# ============================================================
+# config_v3.yaml — Trading Bot Trading Bot v3
+# Amaç : v3 Price Action / SMC stratejisi için özel konfigürasyon.
+# ============================================================
+
+# ─── Strateji Ayarları ────────────────────────────────────────
+strategy:
+  version: "v3"                 # Price Action / SMC stratejisi
+  min_volume_ratio: 0.7
+  sweep_window: 30               # Daha kısa pencere = daha fazla sweep fırsatı
+  max_hold_sweep: 5              # Süpürmeden sonra max 5 mum içinde MSS aranır
+  require_trend: false           # EMA 200 filtresi devre dışı
+  displacement_atr_mult: 1.5     # Displacement mum büyüklük eşiği
+  use_premium_discount: true     # Premium/Discount zone filtresi aktif
+
+# ─── Teknik İndikatör Ayarları ────────────────────────────────
+technical:
+  adx_threshold: 18.0
+
+# ─── Borsa Ayarları ──────────────────────────────────────────
+exchange:
+  name: binance
+  symbol: "BTC/USDT"
+  sandbox: false
+  default_type: "future"        # Futures zorunlu (short ve kaldıraç için)
+  rate_limit: true
+  recv_window: 5000
+  request_timeout: 30
+
+# ─── Veri Toplama Ayarları ───────────────────────────────────
+data:
+  timeframes:
+    - "15m"
+    - "1h"
+    - "4h"
+  limit: 500
+  primary_timeframe: "15m"
+  cache_enabled: true
+  cache_ttl_seconds: 900
+
+  polling:
+    "15m": 900
+    "1h": 3600
+    "4h": 14400
+
+  validation:
+    max_missing_candles: 5
+    min_volume_threshold: 0
+    price_spike_factor: 0.1
+
+# ─── Risk Yönetimi ────────────────────────────────────────────
+risk:
+  max_position_pct: 0.02
+  max_daily_drawdown_pct: 0.05
+  min_risk_reward_ratio: 2.0
+  atr_stop_multiplier: 2.0
+  normal_risk_pct: 0.10
+  high_risk_pct: 0.20
+
+# ─── Loglama ─────────────────────────────────────────────────
+logging:
+  level: "INFO"
+  log_dir: "logs_v3"           # v3 için ayrı log dizini
+  max_bytes: 10485760
+  backup_count: 5
+  console_output: true
+
+# ─── Paper Trading ────────────────────────────────────────────
+paper_trading:
+  enabled: true
+  initial_balance_usdt: 10000
+  commission_rate: 0.001
+
+# ─── Emir Yürütme ─────────────────────────────────────────────
+execution:
+  order_type: "market"
+  limit_timeout_minutes: 180    # FVG limit emirleri için 3 saat bekleme süresi
+  leverage: 5
+  margin_mode: "ISOLATED"
+
+# ─── Yapay Zeka Sinyal Doğrulama ──────────────────────────────
+use_ai_signal_verification: false

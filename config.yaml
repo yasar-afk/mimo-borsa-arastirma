@@ -1,5 +1,5 @@
 # ============================================================
-# config.yaml — ANTIGRAVITI Trading Bot
+# config.yaml — Trading Bot Trading Bot
 # Amaç : Tüm sistem parametrelerinin tek merkezi kaynağı.
 #         Kod içinde "hardcode" değer OLMAMALI; buradan okunmalı.
 # Tarih: 2026-06-03

@@ -1,0 +1,168 @@
+# ============================================================
+# config_live_v65.yaml — V6.5 Enhanced Live Config
+# V6'dan dersler çıkarılarak optimize edildi
+# ============================================================
+
+# ─── Strateji Ayarları ────────────────────────────────────────
+strategy:
+  version: "v6.5_enhanced"
+  entry_threshold: 0.65
+  exit_threshold: 0.40
+  max_concurrent_positions: 5
+  min_volume_ratio: 0.8
+
+# ─── V6 Mean Reversion Parametreleri ──────────────────────────
+mean_reversion:
+  bb_period: 20
+  bb_std: 2.0
+  rsi_period: 14
+  rsi_oversold: 30
+  rsi_overbought: 70
+  atr_period: 14
+  volume_ma_period: 20
+  divergence_lookback: 10
+  atr_sl_multiplier: 2.0
+  atr_tp_multiplier: 2.5
+
+# ─── V6.5 YENİ: Dinamik Stop-Loss ────────────────────────────
+dynamic_sl:
+  enabled: true
+  base_multiplier: 1.5
+  low_volatility_multiplier: 1.5
+  normal_multiplier: 2.0
+  high_volatility_multiplier: 2.5
+  extreme_multiplier: 3.0
+  atr_ma_period: 50
+
+# ─── V6.5 YENİ: Cooldown (Tekrar Giriş Engelleyici) ──────────
+cooldown:
+  enabled: true
+  stop_loss_hours: 2
+  rotation_hours: 0.5
+  same_price_tolerance_pct: 0.02
+
+# ─── V6.5 YENİ: Rotasyon İyileştirmesi ───────────────────────
+rotation:
+  threshold: 70.0
+  major_pair_threshold: 80.0
+  major_pairs:
+    - "BTC/USDT"
+    - "ETH/USDT"
+    - "BNB/USDT"
+    - "SOL/USDT"
+    - "XRP/USDT"
+  max_loss_per_rotation_usdt: 25.0
+
+# ─── V6.5 YENİ: Piyasa Rejimi Filtresi ───────────────────────
+regime_filter:
+  enabled: true
+  timeframe: "4h"
+  reject_short_in_trend_up: true
+  reject_long_in_trend_down: true
+  reduce_size_in_volatile: true
+  volatile_size_reduction_pct: 0.50
+
+# ─── V6.5 YENİ: Korelasyon Filtresi ──────────────────────────
+correlation:
+  enabled: true
+  max_correlation: 0.70
+  lookback_periods: 100
+  max_same_sector: 2
+  sectors:
+    l1: ["BTC/USDT", "ETH/USDT", "SOL/USDT", "BNB/USDT", "AVAX/USDT", "NEAR/USDT", "DOT/USDT", "ADA/USDT"]
+    l2: ["ARB/USDT", "OP/USDT", "MATIC/USDT", "IMX/USDT"]
+    defi: ["UNI/USDT", "AAVE/USDT", "LINK/USDT", "LDO/USDT", "MKR/USDT"]
+    meme: ["DOGE/USDT", "PEPE/USDT", "SHIB/USDT", "LUNC/USDT"]
+    ai: ["FET/USDT", "RENDER/USDT", "TAO/USDT", "NEAR/USDT"]
+    stablecoin_like: ["PAXG/USDT", "RLUSD/USDT", "FDUSD/USDT", "USDC/USDT"]
+
+# ─── V6.5 YENİ: Kademeli Kâr Alma ────────────────────────────
+partial_tp:
+  enabled: true
+  levels:
+    - progress_pct: 0.50
+      close_pct: 0.30
+      move_sl_to_breakeven: true
+    - progress_pct: 0.70
+      close_pct: 0.30
+      start_trailing: true
+    - progress_pct: 1.00
+      close_pct: 0.40
+
+# ─── V6.5 YENİ: Sembol Kalite Filtresi ───────────────────────
+symbol_filter:
+  enabled: true
+  max_daily_move_pct: 15.0
+  min_daily_volume_usdt: 1000000
+  cooldown_after_consecutive_losses: 5
+  cooldown_loss_hours: 12
+  excluded_symbols:
+    - "PAXG/USDT"
+    - "RLUSD/USDT"
+    - "FDUSD/USDT"
+    - "USDC/USDT"
+
+# ─── Teknik İndikatör Ayarları ────────────────────────────────
+technical:
+  adx_period: 14
+  adx_threshold: 20.0
+
+# ─── Borsa Ayarları ──────────────────────────────────────────
+exchange:
+  name: binance
+  symbol: "BTC/USDT"
+  sandbox: false
+  default_type: "spot"
+  rate_limit: true
+  recv_window: 5000
+  request_timeout: 30
+
+# ─── Veri Toplama Ayarları ───────────────────────────────────
+data:
+  timeframes:
+    - "1h"
+    - "4h"
+  limit: 500
+  primary_timeframe: "1h"
+  cache_enabled: true
+  cache_ttl_seconds: 3600
+  polling:
+    "1h": 3600
+    "4h": 14400
+  validation:
+    max_missing_candles: 5
+    min_volume_threshold: 0
+    price_spike_factor: 0.1
+
+# ─── Risk Yönetimi ──────────────────────────────────────────
+risk:
+  max_position_pct: 0.10
+  max_daily_drawdown_pct: 0.03
+  min_risk_reward_ratio: 2.0
+  atr_stop_multiplier: 2.0
+  high_risk_pct: 0.15
+  normal_risk_pct: 0.10
+
+# ─── Loglama ────────────────────────────────────────────────
+logging:
+  level: "INFO"
+  log_dir: "logs/live_v65"
+  max_bytes: 10485760
+  backup_count: 10
+  console_output: true
+
+# ─── Paper Trading ──────────────────────────────────────────
+paper_trading:
+  enabled: false
+  initial_balance_usdt: 10000
+  commission_rate: 0.001
+
+# ─── Emir Yürütme ────────────────────────────────────────────
+execution:
+  order_type: "market"
+  limit_timeout_minutes: 15
+  leverage: 1
+  margin_mode: "ISOLATED"
+
+# ─── AI Doğrulama ─────────────────────────────────────────────
+use_ai_signal_verification: true
