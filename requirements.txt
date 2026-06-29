@@ -1,0 +1,54 @@
+# ============================================================
+# requirements.txt — ANTIGRAVITI Trading Bot
+# Amaç : Projenin tüm Python bağımlılıklarını sabitlenmiş
+#         versiyonlarla listeler.
+# Tarih: 2026-06-03
+#
+# KURULUM:
+#   pip install -r requirements.txt
+#
+# GÜNCELLEME:
+#   Versiyon değişikliği öncesi pip-compile ile test et.
+#   Kritik paketleri (ccxt) güncellerken changelog oku.
+# ============================================================
+
+# --- Borsa Bağlantısı ---
+ccxt==4.3.89                  # Çoklu borsa API wrapper (REST + WebSocket)
+
+# --- Veri İşleme ---
+pandas==2.2.2                 # Zaman serisi ve OHLCV manipülasyonu
+numpy==1.26.4                 # Sayısal hesaplamalar
+
+# --- Teknik Analiz (Faz 1b'de kullanılacak) ---
+ta==0.11.0                    # Teknik analiz indikatörleri (RSI, MACD, EMA, BB, ATR)
+
+# --- Konfigürasyon ---
+pydantic==2.7.1               # Tip-güvenli veri doğrulama
+pydantic-settings==2.3.0      # .env + config yönetimi
+python-dotenv==1.0.1          # .env dosyasını ortam değişkenine yükle
+PyYAML==6.0.1                 # YAML config okuma
+
+# --- Zamanlama (Faz 2'de aktif kullanım) ---
+APScheduler==3.10.4           # Görev zamanlama (polling döngüleri)
+
+# --- Loglama ---
+colorlog==6.8.2               # Renkli konsol log çıktısı
+
+# --- Test ---
+pytest==8.2.2                 # Test framework
+pytest-asyncio==0.23.7        # Async fonksiyon testleri
+pytest-mock==3.14.0           # Mock objeler
+
+# --- Backtest ---
+# vectorbt opsiyonel — hızlandırılmış backtest için
+# vectorbt==0.26.0
+
+# --- Geliştirici Araçları ---
+black==24.4.2                 # Kod formatlayıcı (PEP 8)
+flake8==7.0.0                 # Lint kontrolü
+mypy==1.10.0                  # Statik tip kontrolü
+
+# --- Yapay Zeka / Makine Öğrenmesi (AI/ML) ---
+scikit-learn==1.4.2           # ML Modelleri ve Veri Ön-işleme
+joblib==1.4.0                 # Model kaydetme ve yükleme
+

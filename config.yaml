@@ -1,0 +1,90 @@
+# ============================================================
+# config.yaml — ANTIGRAVITI Trading Bot
+# Amaç : Tüm sistem parametrelerinin tek merkezi kaynağı.
+#         Kod içinde "hardcode" değer OLMAMALI; buradan okunmalı.
+# Tarih: 2026-06-03
+#
+# DEĞİŞTİRME REHBERİ:
+#   - exchange.symbol    → Trade edilecek coin paritesi
+#   - data.timeframes    → İstediğin zaman dilimlerini ekle/çıkar
+#   - data.limit         → Her çekişte kaç mum verisi alınacak
+#   - risk.*             → Risk parametrelerini kendi toleransına göre ayarla
+#
+# ⚠️  Bu dosyayı değiştirdikten sonra botu yeniden başlatmayı unutma.
+# ============================================================
+
+# ─── Strateji Ayarları ────────────────────────────────────────
+strategy:
+  version: "v2"               # "v1" (v1.0 eski politika) veya "v2" (v2.0 yeni politika)
+  entry_threshold: 0.65       # Pozisyon açmak için gereken min ağırlıklı skor (0.0-1.0)
+  exit_threshold: 0.40        # Pozisyon kapatmak için gereken eşik (0.0-1.0)
+  max_concurrent_positions: 10 # Maksimum aktif pozisyon sayısı
+  min_volume_ratio: 0.8       # Minimum hacim oranı
+
+# ─── Teknik İndikatör Ayarları ────────────────────────────────
+technical:
+  adx_period: 14              # ADX hesaplama periyodu (varsayılan: 14)
+  adx_threshold: 20.0         # ADX trend gücü eşiği
+
+
+# ─── Borsa Ayarları ──────────────────────────────────────────
+exchange:
+  name: binance               # Kullanılacak borsa (ccxt uyumlu isim)
+  symbol: "BTC/USDT"          # Varsayılan işlem çifti (değiştirilebilir)
+  sandbox: false              # true = Binance testnet kullan (paper trade)
+  default_type: "future"      # spot veya future
+  rate_limit: true            # CCXT otomatik rate limit yönetimi
+  recv_window: 5000           # Binance zaman penceresi (ms)
+  request_timeout: 30         # API istek zaman aşımı (saniye)
+
+# ─── Veri Toplama Ayarları ───────────────────────────────────
+data:
+  timeframes:
+    - "1h"                    # 1 saatlik mum verisi
+    - "4h"                    # 4 saatlik mum verisi
+    - "1d"                    # Günlük mum verisi
+  limit: 500                  # Her çekişte alınacak mum sayısı (max ~1000)
+  primary_timeframe: "1h"     # Ana sinyal üretim zaman dilimi
+  cache_enabled: true         # Veriyi bellekte önbellekle
+  cache_ttl_seconds: 3600     # Önbellek geçerlilik süresi (1 saat)
+  
+  # REST Polling aralıkları (saniye)
+  polling:
+    "1h": 3600                # 1 saat = 3600 saniye
+    "4h": 14400               # 4 saat = 14400 saniye
+    "1d": 86400               # 1 gün = 86400 saniye
+
+  # Veri doğrulama eşikleri
+  validation:
+    max_missing_candles: 5    # İzin verilen maksimum eksik mum sayısı
+    min_volume_threshold: 0   # Minimum işlem hacmi (0 = devre dışı)
+    price_spike_factor: 0.1   # %10 fiyat sıçraması anomali sayılır
+
+# ─── Risk Yönetimi Parametreleri (Faz 2'de kullanılacak) ─────
+risk:
+  max_position_pct: 0.02      # Portföyün max %2'si tek pozisyonda
+  max_daily_drawdown_pct: 0.05  # Günlük max %5 zarar → bot durur
+  min_risk_reward_ratio: 2.0  # Min Risk/Ödül oranı
+  atr_stop_multiplier: 2.0    # ATR tabanlı stop: ATR × 2.0
+
+# ─── Loglama Ayarları ────────────────────────────────────────
+logging:
+  level: "INFO"               # DEBUG | INFO | WARNING | ERROR
+  log_dir: "logs"             # Log dosyaları klasörü
+  max_bytes: 10485760         # Maks log dosyası boyutu (10 MB)
+  backup_count: 5             # Tutulacak eski log dosyası sayısı
+  console_output: true        # Terminale de yazdır
+
+# ─── Paper Trading Ayarları ──────────────────────────────────
+paper_trading:
+  enabled: true               # ⚠️ Her zaman true ile başla!
+  initial_balance_usdt: 10000 # Sanal başlangıç bakiyesi (USDT)
+  commission_rate: 0.001      # Binance spot komisyon oranı (%0.1)
+
+# ─── Emir Yürütme Ayarları ────────────────────────────────────
+execution:
+  order_type: "limit"          # "market" veya "limit"
+  limit_timeout_minutes: 15    # Limit alış emri zaman aşımı süresi (dakika)
+  leverage: 5                  # Kaldıraç oranı (ör. 5 = 5x)
+  margin_mode: "ISOLATED"      # Marjin modu ("ISOLATED" veya "CROSS")
+
